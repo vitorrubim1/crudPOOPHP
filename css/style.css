@@ -1,0 +1,46 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.container{
+    margin-top:10px;
+}
+
+.small{
+    width: 300px;
+    position: relative;
+}
+.btn{
+    width:300px;
+}
+h3{
+    width: 650px;
+    height: 50px;
+    background-color: #34383d;
+    color:white;
+    border-radius: 3px;
+}
+p{
+    font-size:20px;
+    color:black;
+    font-family: arial;
+}
+.table{
+    width: 900px ;
+    margin-top: 10px;
+    position: absolute;
+    top: 70px;
+    left: 655px;
+    height: 600px;
+    border-radius: 4px;
+}
+hr{
+    width: 300px;
+}
+
+#modal{
+    height: 800px;
+    margin-top: 150px;
+    margin-left: -500px;
+}
