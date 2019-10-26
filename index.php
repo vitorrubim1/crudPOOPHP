@@ -16,10 +16,11 @@
         <h3> CADASTRO DE SETORES E FUNCIONÁRIOS </h3>
 
         <!-- FORMULÁRIO SETOR -->
-        <form action="php/processaIndex.php" method="post">
-
-            <br><p>INFORME O NOME DO SETOR</p><input class="form-control form-control-sm small" name="setor" type="text" required> <br>
-            <input type="submit" class="btn btn-dark btn-lg"> <br>  <hr>
+        <form action="php/cadastroSetor.php" method="post">
+            <br>
+            <p>INFORME O NOME DO SETOR</p><input class="form-control form-control-sm small" name="nomeSetor" type="text" required> <br>
+            <input type="submit" class="btn btn-dark btn-lg"> <br>
+            <hr>
 
             <!--BOTÃO CADASTRAR FUNCIONÁRIO, AQUI ABRE O MODAL-->
             <input type="button" class="btn btn-dark btn-lg" data-toggle="modal" data-target="#modal" value="Cadastrar Funcionário">
@@ -38,31 +39,56 @@
                     </div>
                     <div class="modal-body">
                         <!--FORMULÁRIO FUNCIONÁRIO-->
-                        <form action="php/processaIndex.php" method="post">
-                            
+                        <form action="php/cadastroFuncionario.php" method="post">
+
                             <input class="form-control" type="text" placeholder="DIGITE SEU NOME:" name="nomeFuncionario" required autofocus> <br>
 
-                            <select class="form-control" value="sexo">
-                                <option name="masculino">Masculino</option>
-                                <option name="feminino">Feminino</option>
+                            <select class="form-control" name="sexo">
+                                <option value="M">Masculino</option>
+                                <option value="F">Feminino</option>
+                            </select> <br>
+
+                            <label>Informe seu Setor</label>
+                            <select class="form-control" name="setor" required>
+                                <?php
+                                //chamando a conexao
+                                require_once 'conexao.php';
+                                $conn = new Conexao();
+
+                                //query de visualizao e limpagem de informações
+                                $query = "SELECT * FROM setor";
+                                $resultado = $conn->getConn()->prepare($query);
+                                $resultado->execute();
+
+                                while ($listar = $resultado->fetch(PDO::FETCH_ASSOC)) {
+                                   
+
+                                    $idSetor = $listar['idSetores'];
+                                    $nomeSetor = $listar['nomeSetor'];
+
+                                ?>
+
+                                    <option value="<?php echo $idSetor  ?>">  <?php  echo $nomeSetor  ?> </option>
+
+                                <?php } ?>
                             </select> <br>
 
                             <input class="form-control" type="number" name="cpf" placeholder="Digite seu CPF:" required> <br>
 
-                            <textarea class="form-control" placeholder="DIGITE UMA OBSERVAÇÃO.."></textarea>
+                            <textarea class="form-control" name="observacoes" placeholder="DIGITE UMA OBSERVAÇÃO.."></textarea>
 
-
-                        </form>
                     </div>
+
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-lg btn-dark">Cadastrar</button>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
 
         <!--TABELA PARA VISUALIZAÇÃO DOS SETORES E FUNCIONÁRIOS-->
-        <table class="table table-dark">
+        <table class="table">
             <thead>
                 <tr>
                     <th scope="col">ID</th>
@@ -71,20 +97,44 @@
                     <th scope="col">CPF</th>
                     <th scope="col">OBSERVAÇÃO</th>
                     <th scope="col">SETOR</th>
-                    <th scope="col">NAO SEI OQ</th>
                 </tr>
             </thead>
-            <tbody>
+
+            <!-- 'R' do cRud -->
+
+            <?php
+            //incluindo a conexao e instanciando a classe
+            require_once 'conexao.php';
+            $conn = new Conexao();
+            //comando de visualização
+            $dadosUsuario = "SELECT*FROM funcionario";
+
+            $resultado = $conn->getConn()->prepare($dadosUsuario);
+            $resultado->execute();
+
+
+            while ($listar = $resultado->fetch(PDO::FETCH_ASSOC)) {
+
+                $idFuncionario = $listar['idFuncionario'];
+                $nomeFuncionario = $listar['nomeFuncionario'];
+                $sexo = $listar['sexo'];
+                $cpf = $listar['cpf'];
+                $observacoes = $listar['observacoes'];
+
+            ?>
+
                 <tr>
-                    <th scope="row">1</th>
-                    <td>AAAAAAA</td>
-                    <td>AAAAAAA</td>
-                    <td>AAAAAAA</td>
-                    <td>AAAAAAA</td>
-                    <td>AAAAAAA</td>
-                    <td>AAAAAAA</td>
+                    <th scope="row"> <?php echo "$idFuncionario"  ?> </th>
+                    <td> <?php echo "$nomeFuncionario"  ?> </td>
+                    <td> <?php echo "$sexo"  ?> </td>
+                    <td> <?php echo "$cpf" ?> </td>
+                    <td> <?php echo "$observacoes"  ?> </td>
+                    <td> <?php echo "NOTHING STILL"  ?> </td>
                 </tr>
-            </tbody>
+
+                <!-- Fechamento da chave do while, para envolver todos os funcionario-->
+            <?php }  ?>
+
         </table>
     </div>
 
@@ -97,6 +147,3 @@
 </body>
 
 </html>
-
-
-
