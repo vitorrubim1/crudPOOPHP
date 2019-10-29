@@ -5,6 +5,7 @@
 }
 .container{
     margin-top:10px;
+    position: relative;
 }
 
 .small{
@@ -14,33 +15,38 @@
 .btn{
     width:300px;
 }
-h3{
-    width: 650px;
-    height: 50px;
+#btnAcao{
+    width: 100px;
+}
+h5{
+    width: 100px;
+    height: 30px;
     background-color: #34383d;
     color:white;
     border-radius: 3px;
+    margin-left: 400px;
+    padding-left:4px ;
 }
 p{
     font-size:20px;
-    color:black;
+    color :rgb(33, 37, 41);
     font-family: arial;
+    letter-spacing: 0.5px;
 }
+
 .table{
-    width: 900px ;
-    margin-top: 10px;
     position: absolute;
-    top: 70px;
-    left: 655px;
-    height: 600px;
-    border-radius: 4px;
+    width: 65%;
+    top: 100px;
+    left: 380px;
 }
 hr{
     width: 300px;
 }
 
 #modal{
-    height: 800px;
-    margin-top: 150px;
-    margin-left: -500px;
+    height: 700px;
+    position: absolute;
+    bottom: -10px;
+    left: -400px;
 }

@@ -10,16 +10,19 @@
 </head>
 
 <body>
-
+    <?php require_once 'conexao.php';?>
 
     <div class="container">
-        <h3> CADASTRO DE SETORES E FUNCIONÁRIOS </h3>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <h2>CADASTRO DE SETOR E FUNCIONÁRIO</h2>
+            <h5>yourTalent</h5>
+        </nav>
 
         <!-- FORMULÁRIO SETOR -->
-        <form action="php/cadastroSetor.php" method="post">
+        <form action="class/cadastroSetor.class.php" method="post">
             <br>
             <p>INFORME O NOME DO SETOR</p><input class="form-control form-control-sm small" name="nomeSetor" type="text" required> <br>
-            <input type="submit" class="btn btn-dark btn-lg"> <br>
+            <input type="submit" required class="btn btn-dark btn-lg required"> <br>
             <hr>
 
             <!--BOTÃO CADASTRAR FUNCIONÁRIO, AQUI ABRE O MODAL-->
@@ -32,23 +35,23 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5>CADASTRO DE FUNCIONÁRIO</h5>
+                        <h4>CADASTRO DE FUNCIONÁRIO</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
                         <!--FORMULÁRIO FUNCIONÁRIO-->
-                        <form action="php/cadastroFuncionario.php" method="post">
+                        <form action="class/cadastroFuncionario.class.php" method="post">
 
-                            <input class="form-control" type="text" placeholder="DIGITE SEU NOME:" name="nomeFuncionario" required autofocus> <br>
+                            <input class="form-control" type="text" placeholder="DIGITE O NOME DO FUNCIONÁRIO:" name="nomeFuncionario" required autofocus> <br>
 
                             <select class="form-control" name="sexo">
                                 <option value="M">Masculino</option>
                                 <option value="F">Feminino</option>
                             </select> <br>
 
-                            <label>Informe seu Setor</label>
+                            <label>Informe o Setor</label>
                             <select class="form-control" name="setor" required>
                                 <?php
                                 //chamando a conexao
@@ -61,21 +64,21 @@
                                 $resultado->execute();
 
                                 while ($listar = $resultado->fetch(PDO::FETCH_ASSOC)) {
-                                   
+
 
                                     $idSetor = $listar['idSetores'];
                                     $nomeSetor = $listar['nomeSetor'];
 
-                                ?>
+                                    ?>
 
-                                    <option value="<?php echo $idSetor  ?>">  <?php  echo $nomeSetor  ?> </option>
+                                    <option value="<?php echo $idSetor  ?>"> <?php echo $nomeSetor  ?> </option>
 
                                 <?php } ?>
                             </select> <br>
 
-                            <input class="form-control" type="number" name="cpf" placeholder="Digite seu CPF:" required> <br>
+                            <input class="form-control" type="number" name="cpf" placeholder="Digite o CPF:" required> <br>
 
-                            <textarea class="form-control" name="observacoes" placeholder="DIGITE UMA OBSERVAÇÃO.."></textarea>
+                            <textarea class="form-control" name="observacoes" placeholder="ESCREVA UMA OBSERVAÇÃO SOBRE ELE.."></textarea>
 
                     </div>
 
@@ -97,6 +100,7 @@
                     <th scope="col">CPF</th>
                     <th scope="col">OBSERVAÇÃO</th>
                     <th scope="col">SETOR</th>
+                    <th scope="col">AÇÃO</th>
                 </tr>
             </thead>
 
@@ -121,6 +125,8 @@
                 $cpf = $listar['cpf'];
                 $observacoes = $listar['observacoes'];
 
+                $nomeSetor = "SELECT setor "
+
             ?>
 
                 <tr>
@@ -129,12 +135,16 @@
                     <td> <?php echo "$sexo"  ?> </td>
                     <td> <?php echo "$cpf" ?> </td>
                     <td> <?php echo "$observacoes"  ?> </td>
-                    <td> <?php echo "NOTHING STILL"  ?> </td>
+                    <td> <?php echo "SELECT nomeSetor FROM setor WHERE idFuncionario= $idFuncionario";  ?> </td>
+                    <td> 
+                        <a class="btn btn-dark btn-sm" name="btnAtualiza" id="btnAcao" href="class/atualiza.class.php?id=<?php echo $idFuncionario ?>" role="button">ATUALIZAR</a> <br> <br>
+                        <a class="btn btn-danger btn-sm" id="btnAcao" href="class/apagar.class.php?id=<?php echo $idFuncionario ?>" role="button">EXCLUIR</a> 
+                    </td>
                 </tr>
 
                 <!-- Fechamento da chave do while, para envolver todos os funcionario-->
             <?php }  ?>
-
+                
         </table>
     </div>
 
