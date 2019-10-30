@@ -21,12 +21,12 @@
         <!-- FORMULÁRIO SETOR -->
         <form action="class/cadastroSetor.class.php" method="post">
             <br>
-            <p>INFORME O NOME DO SETOR</p><input class="form-control form-control-sm small" name="nomeSetor" type="text" required> <br>
-            <input type="submit" required class="btn btn-dark btn-lg required"> <br>
+            <p>INFORME O NOME DO SETOR</p><input class="form-control form-control-sm small" name="setor" type="text" required> <br>
+            <input type="submit" required class="btn btn-dark btn-lg required btnPersonalizado"> <br>
             <hr>
 
             <!--BOTÃO CADASTRAR FUNCIONÁRIO, AQUI ABRE O MODAL-->
-            <input type="button" class="btn btn-dark btn-lg" data-toggle="modal" data-target="#modal" value="Cadastrar Funcionário">
+            <input type="button" class="btn btn-dark btn-lg btnPersonalizado" data-toggle="modal" data-target="#modal" value="Cadastrar Funcionário">
         </form>
 
 
@@ -125,7 +125,7 @@
                 $cpf = $listar['cpf'];
                 $observacoes = $listar['observacoes'];
 
-                $nomeSetor = "SELECT setor "
+                
 
             ?>
 
@@ -135,7 +135,9 @@
                     <td> <?php echo "$sexo"  ?> </td>
                     <td> <?php echo "$cpf" ?> </td>
                     <td> <?php echo "$observacoes"  ?> </td>
-                    <td> <?php echo "SELECT nomeSetor FROM setor WHERE idFuncionario= $idFuncionario";  ?> </td>
+                    <td> <?php echo ""?></td>  <!-- SELECT funcionario.idSetores, setor.nomeSetor	FROM funcionario, setorWHERE funcionario.idSetores = setor.idSetores;-->
+                    <td> <?php echo ""?> </td>
+
                     <td> 
                         <a class="btn btn-dark btn-sm" name="btnAtualiza" id="btnAcao" href="class/atualiza.class.php?id=<?php echo $idFuncionario ?>" role="button">ATUALIZAR</a> <br> <br>
                         <a class="btn btn-danger btn-sm" id="btnAcao" href="class/apagar.class.php?id=<?php echo $idFuncionario ?>" role="button">EXCLUIR</a> 

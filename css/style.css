@@ -12,7 +12,7 @@
     width: 300px;
     position: relative;
 }
-.btn{
+.btnPersonalizado{
     width:300px;
 }
 #btnAcao{
@@ -49,4 +49,5 @@ hr{
     position: absolute;
     bottom: -10px;
     left: -400px;
+    overflow: hidden;
 }

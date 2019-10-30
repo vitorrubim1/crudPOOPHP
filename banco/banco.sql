@@ -10,14 +10,13 @@
         sexo CHAR(1),
         cpf INT,
         observacoes VARCHAR(255),
-		idSetores int,
-        FOREIGN KEY (idSetores) REFERENCES setor (idSetores));
-        
+		idSetores int
+        );
+
+-- drop table setor;
 	CREATE TABLE setor(
 		idSetores int primary key auto_increment,
-		nomeSetor varchar(50),
-        idFuncionario int,
-        FOREIGN KEY (idFuncionario) REFERENCES funcionario (idFuncionario));
+		nomeSetor varchar(50));
         
         SELECT nomeSetor FROM setor WHERE idFuncionario = 1;
     

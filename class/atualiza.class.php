@@ -77,7 +77,7 @@
 
 
                 <div style="text-align: right">
-                    <button type="submit" class="btn btn-dark btn-sm">Atualizar</button>
+                    <button type="submit" class="btn btn-dark btn-lg">Atualizar</button>
                 </div>
 
 
