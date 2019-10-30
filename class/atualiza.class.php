@@ -28,8 +28,8 @@
 
     ?>
 
-    <div class="container" style=" width:500px">
-        <form action="atualizarProduto.php" method="post">
+    <div class="container">
+        <form action="atualizaFuncionario.php" method="post">
             <?php
             //incluindo a conexao e instanciando a classe
             require_once '../conexao.php';
@@ -61,9 +61,9 @@
                 </div>
                 <div class="form-group">
                     <label>SEXO</label>
-                    <select value="<?php echo $sexo ?>" class="form-control" name="sexo">
-                        <option>Masculino</option>
-                        <option>Feminino</option>
+                    <select class="form-control" name="sexo">
+                        <option value="M" <?php echo $sexo == "M" ? "selected" : '' ?>>Masculino</option>
+                        <option value="F" <?php echo $sexo == "F" ? "selected" : '' ?>>Feminino</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -72,10 +72,10 @@
                 </div>
                 <div class="form-group">
                     <label>OBSERVAÇÃO</label>
-                    <input value="<?php echo $observacoes?>" class="form-control" name="observacao">
+                    <textarea value="<?php echo $observacoes ?>" class="form-control" name="observacao"></textarea>
                 </div>
 
-                
+
                 <div style="text-align: right">
                     <button type="submit" class="btn btn-dark btn-sm">Atualizar</button>
                 </div>
