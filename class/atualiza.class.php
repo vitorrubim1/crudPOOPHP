@@ -29,61 +29,93 @@
     ?>
 
     <div class="container">
-        <form action="atualizaFuncionario.php" method="post">
+        <form action="" method="post">
             <?php
             //incluindo a conexao e instanciando a classe
             require_once '../conexao.php';
             $conn = new Conexao();
 
+
+            if(isset($_POST['editar'])){
+                $query = "UPDATE funcionario SET nomeFuncionario = :nomeFuncionario, sexo= :sexo, cpf= :cpf, observacoes= :observacoes, idSetores = '55' ";
+                //echo $query;
+                $resultado = $conn->getConn()->prepare($query);
+                
+                $resultado -> bindParam (':nome', $_POST['nome']);
+                $resultado -> bindParam (':sexo', $_POST['sexo']);
+                $resultado -> bindParam (':cpf', $_POST['cpf']);
+                $resultado -> bindParam (':observacoes', $_POST['observacoes']);
+                $resultado -> bindParam (':name', $_POST['idSetores']);
+               
+                //TÁ FALTANDO O SETOR, POR ENQUANTO ESTÁ O SET ESTÁ FIXO
+
+                    if ($resultado->execute()){
+                        echo "<script> alert('DADOS ATUALIZADOS COM SUCESSO!'); location.href='../index.php' </script>";
+                    }else{
+                        echo "<script> alert('Deu ruim ao atualizar aí grandeeeeee');</script>";
+                    }
+            }
+
+
+
             //pegando id via get
             $idFuncionario = $_GET['id'];
             //comando de visualização
-
-            $dadosUsuario = "SELECT*FROM funcionario WHERE idFuncionario = '$idFuncionario'";
-
+            $dadosUsuario = "SELECT*FROM funcionario WHERE idFuncionario = :id";
             $resultado = $conn->getConn()->prepare($dadosUsuario);
+            $resultado->bindParam(':id', $idFuncionario, PDO::PARAM_INT);
             $resultado->execute();
-
-            while ($listar = $resultado->fetch(PDO::FETCH_ASSOC)) {
-
-                $idFuncionario = $listar['idFuncionario'];
-                $nomeFuncionario = $listar['nomeFuncionario'];
-                $sexo = $listar['sexo'];
-                $cpf = $listar['cpf'];
-                $observacoes = $listar['observacoes'];
-
-                ?>
-
-                <br>
-                <div class="form-group">
-                    <label>NOME DO FUNCIONÁRIO</label>
-                    <input type="text" name="nomeFuncionario" class="form-control" value="<?php echo $nomeFuncionario ?>">
-                </div>
-                <div class="form-group">
-                    <label>SEXO</label>
-                    <select class="form-control" name="sexo">
-                        <option value="M" <?php echo $sexo == "M" ? "selected" : '' ?>>Masculino</option>
-                        <option value="F" <?php echo $sexo == "F" ? "selected" : '' ?>>Feminino</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>CPF</label>
-                    <input type="number" name="cpf" class="form-control" value="<?php echo $cpf ?>">
-                </div>
-                <div class="form-group">
-                    <label>OBSERVAÇÃO</label>
-                    <textarea value="<?php echo $observacoes ?>" class="form-control" name="observacao"></textarea>
-                </div>
-
-
-                <div style="text-align: right">
-                    <button type="submit" class="btn btn-dark btn-lg">Atualizar</button>
-                </div>
+            $listar = $resultado->fetch(PDO::FETCH_ASSOC);
 
 
 
-                <!--Fechamento da chave do while-->
-            <?php } ?>
+            $idFuncionario = $listar['idFuncionario'];
+            $nomeFuncionario = $listar['nomeFuncionario'];
+            $sexo = $listar['sexo'];
+            $cpf = $listar['cpf'];
+            $observacoes = $listar['observacoes'];
+            $setor = $listar['idSetores'];
+
+            ?>
+
+            <br>
+            <div class="form-group">
+                <label>NOME DO FUNCIONÁRIO</label>
+                <input type="text" name="nomeFuncionario" class="form-control" value="<?php echo $nomeFuncionario ?>">
+            </div>
+            <div class="form-group">
+                <label>SEXO</label>
+                <select class="form-control" name="sexo">
+                    <option value="M" <?php echo $sexo == "M" ? "selected" : '' ?>>Masculino</option>
+                    <!-- If inline ("gambiarrinha") -->
+                    <option value="F" <?php echo $sexo == "F" ? "selected" : '' ?>>Feminino</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>CPF</label>
+                <input type="number" name="cpf" class="form-control" value="<?php echo $cpf ?>">
+            </div>
+
+            <div class="form-group">
+                <label>OBSERVAÇÃO</label>
+                <textarea name="observacoes" class="form-control"><?php echo $observacoes ?></textarea>
+            </div>
+
+            <label>SETOR</label>
+            <select class="form-control" name="setor">
+                <option value="<?php echo $setor == "$setor" ? "selected" : '' ?>">Aqui tá errado #ARRUMAR</option>
+                <option value="<?php echo $setor ?>">Aqui tá errado #ARRUMAR</option>
+            </select> <br>
+
+
+            <div style="text-align: right">
+                <input type="submit" class="btn btn-dark btn-lg" name="editar" value="Atualizar">
+            </div>
+
+
+
+            <!--Fechamento da chave do while-->
+
         </form>
     </div>
 

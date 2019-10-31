@@ -6,7 +6,7 @@
     $conn = new Conexao ();
 
     //query de insercao do funcionario e limpeza dos input
-    $query = "INSERT INTO funcionario (nomeFuncionario, sexo, cpf, observacoes, idSetores ) VALUES (:nomeFuncionario, :sexo, :cpf, :observacoes, :setor)";
+    $query = "INSERT INTO funcionario (nomeFuncionario, sexo, cpf, observacoes, idSetores ) VALUES (:nomeFuncionario, :sexo, :cpf, :observacoes, :setor )";
 
     //print_r ($query); exit;
 
@@ -17,11 +17,12 @@
     $cadastrar ->bindParam(':cpf', $_POST['cpf'], PDO::PARAM_INT);
     $cadastrar ->bindParam(':observacoes', $_POST['observacoes'], PDO::PARAM_STR);
     $cadastrar ->bindParam(':setor', $_POST['setor'], PDO::PARAM_STR);
+    
 
     $cadastrar->execute();
 
     if($cadastrar->rowCount()){
-        echo "<script> alert('Dados inseridos com sucesso'); location.href='../index.php' </script>";
+        echo "<script> alert('DADOS INSERIDOS COM SUCESSO!'); location.href='../index.php' </script>";
     }else{
         echo "<script> alert('Deu ruim ai grandeeeeee');</script>";
     }

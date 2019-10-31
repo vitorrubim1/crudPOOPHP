@@ -22,7 +22,7 @@
         <form action="class/cadastroSetor.class.php" method="post">
             <br>
             <p>INFORME O NOME DO SETOR</p><input class="form-control form-control-sm small" name="setor" type="text" required> <br>
-            <input type="submit" required class="btn btn-dark btn-lg required btnPersonalizado"> <br>
+            <input type="submit" required class="btn btn-dark btn-lg required btnPersonalizado" autocomplete="off"> <br>
             <hr>
 
             <!--BOTÃO CADASTRAR FUNCIONÁRIO, AQUI ABRE O MODAL-->
@@ -44,7 +44,7 @@
                         <!--FORMULÁRIO FUNCIONÁRIO-->
                         <form action="class/cadastroFuncionario.class.php" method="post">
 
-                            <input class="form-control" type="text" placeholder="DIGITE O NOME DO FUNCIONÁRIO:" name="nomeFuncionario" required autofocus> <br>
+                            <input class="form-control" type="text" placeholder="DIGITE O NOME DO FUNCIONÁRIO:" name="nomeFuncionario" required autocomplete="off"> <br>
 
                             <select class="form-control" name="sexo">
                                 <option value="M">Masculino</option>
@@ -68,6 +68,8 @@
 
                                     $idSetor = $listar['idSetores'];
                                     $nomeSetor = $listar['nomeSetor'];
+
+                                    
 
                                     ?>
 
@@ -111,7 +113,8 @@
             require_once 'conexao.php';
             $conn = new Conexao();
             //comando de visualização
-            $dadosUsuario = "SELECT*FROM funcionario";
+            $dadosUsuario = "SELECT funcionario.idFuncionario, funcionario.nomeFuncionario, funcionario.sexo, funcionario.cpf, funcionario.observacoes, funcionario.idSetores FROM funcionario 
+            INNER JOIN setor ON funcionario.idSetores = setor.idSetores";
 
             $resultado = $conn->getConn()->prepare($dadosUsuario);
             $resultado->execute();
@@ -124,6 +127,7 @@
                 $sexo = $listar['sexo'];
                 $cpf = $listar['cpf'];
                 $observacoes = $listar['observacoes'];
+                
 
                 
 
@@ -135,8 +139,8 @@
                     <td> <?php echo "$sexo"  ?> </td>
                     <td> <?php echo "$cpf" ?> </td>
                     <td> <?php echo "$observacoes"  ?> </td>
-                    <td> <?php echo ""?></td>  <!-- SELECT funcionario.idSetores, setor.nomeSetor	FROM funcionario, setorWHERE funcionario.idSetores = setor.idSetores;-->
-                    <td> <?php echo ""?> </td>
+                    <td> <?php echo "MANO AQUI TA ERRADO"?></td>  <!-- SELECT funcionario.idSetores, setor.nomeSetor	FROM funcionario, setorWHERE funcionario.idSetores = setor.idSetores;-->
+                   
 
                     <td> 
                         <a class="btn btn-dark btn-sm" name="btnAtualiza" id="btnAcao" href="class/atualiza.class.php?id=<?php echo $idFuncionario ?>" role="button">ATUALIZAR</a> <br> <br>
