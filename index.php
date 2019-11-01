@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <?php require_once 'conexao.php';?>
+    <?php require_once 'class/conexao.class.php';?>
 
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -19,7 +19,7 @@
         </nav>
 
         <!-- FORMULÁRIO SETOR -->
-        <form action="class/cadastroSetor.class.php" method="post">
+        <form action="php/cadastroSetor.php" method="post">
             <br>
             <p>INFORME O NOME DO SETOR</p><input class="form-control form-control-sm small" name="setor" type="text" required> <br>
             <input type="submit" required class="btn btn-dark btn-lg required btnPersonalizado" autocomplete="off"> <br>
@@ -42,7 +42,7 @@
                     </div>
                     <div class="modal-body">
                         <!--FORMULÁRIO FUNCIONÁRIO-->
-                        <form action="class/cadastroFuncionario.class.php" method="post">
+                        <form action="php/cadastroFuncionario.php" method="post">
 
                             <input class="form-control" type="text" placeholder="DIGITE O NOME DO FUNCIONÁRIO:" name="nomeFuncionario" required autocomplete="off"> <br>
 
@@ -55,7 +55,7 @@
                             <select class="form-control" name="setor" required>
                                 <?php
                                 //chamando a conexao
-                                require_once 'conexao.php';
+                                require_once 'class/conexao.class.php';
                                 $conn = new Conexao();
 
                                 //query de visualizao e limpagem de informações
@@ -65,11 +65,8 @@
 
                                 while ($listar = $resultado->fetch(PDO::FETCH_ASSOC)) {
 
-
                                     $idSetor = $listar['idSetores'];
                                     $nomeSetor = $listar['nomeSetor'];
-
-                                    
 
                                     ?>
 
@@ -110,11 +107,11 @@
 
             <?php
             //incluindo a conexao e instanciando a classe
-            require_once 'conexao.php';
+            require_once 'class/conexao.class.php';
             $conn = new Conexao();
             //comando de visualização
-            $dadosUsuario = "SELECT funcionario.idFuncionario, funcionario.nomeFuncionario, funcionario.sexo, funcionario.cpf, funcionario.observacoes, funcionario.idSetores FROM funcionario 
-            INNER JOIN setor ON funcionario.idSetores = setor.idSetores";
+            $dadosUsuario = "SELECT funcionario.idFuncionario, funcionario.nomeFuncionario, funcionario.sexo, funcionario.cpf, funcionario.observacoes, funcionario.idSetores 
+            FROM funcionario JOIN setor ON setor.idSetores = funcionario.idSetores";
 
             $resultado = $conn->getConn()->prepare($dadosUsuario);
             $resultado->execute();
@@ -127,9 +124,7 @@
                 $sexo = $listar['sexo'];
                 $cpf = $listar['cpf'];
                 $observacoes = $listar['observacoes'];
-                
-
-                
+                $idSet = $listar['idSetores'];   //AQUI TEM QUE SER O NOME, NÃO O ID DO SETOR GRRRR
 
             ?>
 
@@ -139,12 +134,12 @@
                     <td> <?php echo "$sexo"  ?> </td>
                     <td> <?php echo "$cpf" ?> </td>
                     <td> <?php echo "$observacoes"  ?> </td>
-                    <td> <?php echo "MANO AQUI TA ERRADO"?></td>  <!-- SELECT funcionario.idSetores, setor.nomeSetor	FROM funcionario, setorWHERE funcionario.idSetores = setor.idSetores;-->
+                    <td> <?php echo "$idSet"?></td>  
                    
 
                     <td> 
-                        <a class="btn btn-dark btn-sm" name="btnAtualiza" id="btnAcao" href="class/atualiza.class.php?id=<?php echo $idFuncionario ?>" role="button">ATUALIZAR</a> <br> <br>
-                        <a class="btn btn-danger btn-sm" id="btnAcao" href="class/apagar.class.php?id=<?php echo $idFuncionario ?>" role="button">EXCLUIR</a> 
+                        <a class="btn btn-dark btn-sm" name="btnAtualiza" id="btnAcao" href="php/atualiza.php?id=<?php echo $idFuncionario ?>" role="button">ATUALIZAR</a> <br> <br>
+                        <a class="btn btn-danger btn-sm" id="btnAcao" href="php/apagar.php?id=<?php echo $idFuncionario ?>" role="button">EXCLUIR</a> 
                     </td>
                 </tr>
 

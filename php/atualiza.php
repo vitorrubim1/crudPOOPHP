@@ -21,7 +21,7 @@
 
     <?php
     //incluindo e instanciando a conexão
-    require_once '../conexao.php';
+    require_once '../class/conexao.class.php';
     $conn = new Conexao();
 
     //$idFuncionario->bindValue($_GET['btnAtualiza'], PDO::PARAM_INT);
@@ -32,12 +32,12 @@
         <form action="" method="post">
             <?php
             //incluindo a conexao e instanciando a classe
-            require_once '../conexao.php';
+            require_once '../class/conexao.class.php';
             $conn = new Conexao();
 
 
             if(isset($_POST['editar'])){
-                $query = "UPDATE funcionario SET nomeFuncionario = :nomeFuncionario, sexo= :sexo, cpf= :cpf, observacoes= :observacoes, idSetores = '55' ";
+                $query = "UPDATE funcionario SET nomeFuncionario = :nomeFuncionario, sexo= :sexo, cpf= :cpf, observacoes= :observacoes, idSetores =  ";
                 //echo $query;
                 $resultado = $conn->getConn()->prepare($query);
                 
@@ -45,7 +45,7 @@
                 $resultado -> bindParam (':sexo', $_POST['sexo']);
                 $resultado -> bindParam (':cpf', $_POST['cpf']);
                 $resultado -> bindParam (':observacoes', $_POST['observacoes']);
-                $resultado -> bindParam (':name', $_POST['idSetores']);
+                $resultado -> bindParam (':setor', $_POST['idSetores']);
                
                 //TÁ FALTANDO O SETOR, POR ENQUANTO ESTÁ O SET ESTÁ FIXO
 
@@ -103,8 +103,9 @@
 
             <label>SETOR</label>
             <select class="form-control" name="setor">
-                <option value="<?php echo $setor == "$setor" ? "selected" : '' ?>">Aqui tá errado #ARRUMAR</option>
-                <option value="<?php echo $setor ?>">Aqui tá errado #ARRUMAR</option>
+            
+                <option value="<?php echo $setor == "$setor" ? "selected" : '' ?>"><?php echo $setor?></option>
+            
             </select> <br>
 
 
@@ -112,19 +113,12 @@
                 <input type="submit" class="btn btn-dark btn-lg" name="editar" value="Atualizar">
             </div>
 
-
-
-            <!--Fechamento da chave do while-->
-
         </form>
     </div>
-
-
 
     <!--  JavaScript  Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
-
 </html>

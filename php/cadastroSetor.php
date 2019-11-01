@@ -1,6 +1,6 @@
 <?php
     //incluido a conexao
-    require_once '../conexao.php';
+    require_once '../class/conexao.class.php';
 
     //conexao
     $conn = new Conexao();

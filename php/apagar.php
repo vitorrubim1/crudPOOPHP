@@ -1,7 +1,7 @@
 <?php
 
     //incluindo e instanciando a classe de conexão
-    require_once '../conexao.php';
+    require_once '../class/conexao.class.php';
     $conn = new Conexao();
 
     //pegando o id da index
