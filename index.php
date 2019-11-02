@@ -110,8 +110,9 @@
             require_once 'class/conexao.class.php';
             $conn = new Conexao();
             //comando de visualização
-            $dadosUsuario = "SELECT funcionario.idFuncionario, funcionario.nomeFuncionario, funcionario.sexo, funcionario.cpf, funcionario.observacoes, funcionario.idSetores 
-            FROM funcionario JOIN setor ON setor.idSetores = funcionario.idSetores";
+            $dadosUsuario = "SELECT idFuncionario, nomeFuncionario, sexo, 
+            cpf, observacoes, nomeSetor FROM funcionario JOIN setor 
+            ON funcionario.idSetores = setor.idSetores";
 
             $resultado = $conn->getConn()->prepare($dadosUsuario);
             $resultado->execute();
@@ -124,7 +125,7 @@
                 $sexo = $listar['sexo'];
                 $cpf = $listar['cpf'];
                 $observacoes = $listar['observacoes'];
-                $idSet = $listar['idSetores'];   //AQUI TEM QUE SER O NOME, NÃO O ID DO SETOR GRRRR
+                $nomeSetor = $listar['nomeSetor'];   //AQUI TEM QUE SER O NOME, NÃO O ID DO SETOR GRRRR
 
             ?>
 
@@ -134,7 +135,7 @@
                     <td> <?php echo "$sexo"  ?> </td>
                     <td> <?php echo "$cpf" ?> </td>
                     <td> <?php echo "$observacoes"  ?> </td>
-                    <td> <?php echo "$idSet"?></td>  
+                    <td> <?php echo "$nomeSetor"?></td>  
                    
 
                     <td> 

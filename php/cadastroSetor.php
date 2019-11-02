@@ -2,12 +2,9 @@
     //incluido a conexao
     require_once '../class/conexao.class.php';
 
-    //conexao
+    //conexao e query de insercao dos setores
     $conn = new Conexao();
-
-    //query de insercao dos setores
     $query = "INSERT INTO setor (nomeSetor) VALUES (:setor)";
-
     $cadastrar = $conn->getConn()->prepare($query);
 
     //limpando o imput e executando

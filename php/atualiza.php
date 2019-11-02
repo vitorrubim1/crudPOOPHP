@@ -24,6 +24,8 @@
     require_once '../class/conexao.class.php';
     $conn = new Conexao();
 
+    $idFuncionario = $_GET['id'];
+
     //$idFuncionario->bindValue($_GET['btnAtualiza'], PDO::PARAM_INT);
 
     ?>
@@ -37,17 +39,19 @@
 
 
             if(isset($_POST['editar'])){
-                $query = "UPDATE funcionario SET nomeFuncionario = :nomeFuncionario, sexo= :sexo, cpf= :cpf, observacoes= :observacoes, idSetores =  ";
+               // print_r($_POST);
+               // exit;
+                $query = "UPDATE funcionario SET nomeFuncionario = :nomeFuncionario, sexo = :sexo, cpf = :cpf, observacoes = :observacoes, idSetores = :idSetores WHERE idFuncionario = $idFuncionario";
                 //echo $query;
                 $resultado = $conn->getConn()->prepare($query);
                 
-                $resultado -> bindParam (':nome', $_POST['nome']);
-                $resultado -> bindParam (':sexo', $_POST['sexo']);
-                $resultado -> bindParam (':cpf', $_POST['cpf']);
-                $resultado -> bindParam (':observacoes', $_POST['observacoes']);
-                $resultado -> bindParam (':setor', $_POST['idSetores']);
+                $resultado -> bindParam (':nomeFuncionario', $_POST['nomeFuncionario'], PDO::PARAM_STR);
+                $resultado -> bindParam (':sexo', $_POST['sexo'], PDO::PARAM_STR);
+                $resultado -> bindParam (':cpf', $_POST['cpf'], PDO::PARAM_STR);
+                $resultado -> bindParam (':observacoes', $_POST['observacoes'], PDO::PARAM_STR);
+                $resultado -> bindParam (':idSetores', $_POST['setor'], PDO::PARAM_STR);
                
-                //TÁ FALTANDO O SETOR, POR ENQUANTO ESTÁ O SET ESTÁ FIXO
+                //print_r($query); exit; 
 
                     if ($resultado->execute()){
                         echo "<script> alert('DADOS ATUALIZADOS COM SUCESSO!'); location.href='../index.php' </script>";
@@ -61,7 +65,8 @@
             //pegando id via get
             $idFuncionario = $_GET['id'];
             //comando de visualização
-            $dadosUsuario = "SELECT*FROM funcionario WHERE idFuncionario = :id";
+            $dadosUsuario = "SELECT*, nomeSetor FROM funcionario JOIN setor 
+            ON funcionario.idSetores = setor.idSetores WHERE idFuncionario = :id";
             $resultado = $conn->getConn()->prepare($dadosUsuario);
             $resultado->bindParam(':id', $idFuncionario, PDO::PARAM_INT);
             $resultado->execute();
@@ -74,7 +79,7 @@
             $sexo = $listar['sexo'];
             $cpf = $listar['cpf'];
             $observacoes = $listar['observacoes'];
-            $setor = $listar['idSetores'];
+            $setor = $listar['nomeSetor'];
 
             ?>
 
@@ -93,7 +98,7 @@
             </div>
             <div class="form-group">
                 <label>CPF</label>
-                <input type="number" name="cpf" class="form-control" value="<?php echo $cpf ?>">
+                <input type="text" name="cpf" class="form-control" value="<?php echo $cpf ?>">
             </div>
 
             <div class="form-group">
@@ -103,12 +108,21 @@
 
             <label>SETOR</label>
             <select class="form-control" name="setor">
-            
-                <option value="<?php echo $setor == "$setor" ? "selected" : '' ?>"><?php echo $setor?></option>
-            
-            </select> <br>
+                <option selected value="<?php echo $listar['idSetores']?>"><?php echo $setor ?></option>";
+                <?php
+                    $dadosSetores = "SELECT * FROM setor WHERE NOT idSetores= $listar[idSetores]";
+                    $resultado = $conn->getConn()->prepare($dadosSetores);
+                    $resultado->execute();
 
 
+                    while($listarsetor = $resultado->fetch(PDO::FETCH_ASSOC)){
+                        echo "<option value='$listarsetor[idSetores]'>$listarsetor[nomeSetor]</option>";
+                    }
+                    
+                ?>
+            </select>
+
+                <br>
             <div style="text-align: right">
                 <input type="submit" class="btn btn-dark btn-lg" name="editar" value="Atualizar">
             </div>
