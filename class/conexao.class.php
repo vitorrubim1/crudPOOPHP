@@ -3,7 +3,7 @@
     class Conexao {
         public static $host = "localhost";
         public static $usuario = "root";
-        public static $senha = "1234";
+        public static $senha = "";
         public static $banco = "crudPOO";
         private static $Connect = null;
 

@@ -20,13 +20,23 @@
     </div>
 
     <?php
-    //incluindo e instanciando a conexão
+    //INCLUINDO E INSTANCIANDO A CONEXÃO E PEGANDO O ID VIA GET
     require_once '../class/conexao.class.php';
     $conn = new Conexao();
-
     $idFuncionario = $_GET['id'];
 
-    //$idFuncionario->bindValue($_GET['btnAtualiza'], PDO::PARAM_INT);
+    
+    //INCLUINDO E INSTANCIANDO A CLASSE DE VERIFICAÇÃO DOS INPUTS
+    /* require_once '../class/ValidaInput.class.php';
+    $validaInput = new ValidaInput;
+
+    //SETANDO OS VALORES PARA A CLASSE
+    $validaInput -> setNome($_POST['nomeFuncionario']);
+    $validaInput -> setSexo($_POST['sexo']);
+    $validaInput -> setCpf($_POST['cpf']);
+    $validaInput -> setSetor($_POST['setor']);
+    $validaInput -> setObservacoes($_POST['observacoes']); */
+    
 
     ?>
 
@@ -39,8 +49,10 @@
 
 
             if(isset($_POST['editar'])){
-               // print_r($_POST);
-               // exit;
+
+               //AQUI TEM QUE TER UM IF PARA VERIFICAR SE As CLASSEs TA RETORNANDO TRUE, E EXECUTAR O CÓDIGO ABAIXO
+
+
                 $query = "UPDATE funcionario SET nomeFuncionario = :nomeFuncionario, sexo = :sexo, cpf = :cpf, observacoes = :observacoes, idSetores = :idSetores WHERE idFuncionario = $idFuncionario";
                 //echo $query;
                 $resultado = $conn->getConn()->prepare($query);
@@ -60,20 +72,15 @@
                     }
             }
 
-
-
-            //pegando id via get
-            $idFuncionario = $_GET['id'];
-            //comando de visualização
+            //COMANDO DE VISUALIZAÇÃO
             $dadosUsuario = "SELECT*, nomeSetor FROM funcionario JOIN setor 
             ON funcionario.idSetores = setor.idSetores WHERE idFuncionario = :id";
             $resultado = $conn->getConn()->prepare($dadosUsuario);
             $resultado->bindParam(':id', $idFuncionario, PDO::PARAM_INT);
             $resultado->execute();
             $listar = $resultado->fetch(PDO::FETCH_ASSOC);
-
-
-
+            
+            //PEGANDO OS VALORES DO BANCO
             $idFuncionario = $listar['idFuncionario'];
             $nomeFuncionario = $listar['nomeFuncionario'];
             $sexo = $listar['sexo'];
@@ -113,7 +120,6 @@
                     $dadosSetores = "SELECT * FROM setor WHERE NOT idSetores= $listar[idSetores]";
                     $resultado = $conn->getConn()->prepare($dadosSetores);
                     $resultado->execute();
-
 
                     while($listarsetor = $resultado->fetch(PDO::FETCH_ASSOC)){
                         echo "<option value='$listarsetor[idSetores]'>$listarsetor[nomeSetor]</option>";

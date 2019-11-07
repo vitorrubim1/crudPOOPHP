@@ -19,9 +19,7 @@
 		idSetores int primary key auto_increment,
 		nomeSetor varchar(50));
 				
-		SELECT idFuncionario, nomeFuncionario, sexo, 
-        cpf, observacoes, nomeSetor FROM funcionario JOIN setor 
-        ON funcionario.idSetores = setor.idSetores;
+		
     
     select * from funcionario;
     select * from setor;
