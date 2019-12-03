@@ -1,6 +1,10 @@
 <?php
     //incluido a conexao
     require_once '../class/conexao.class.php';
+    require_once '../class/ValidaInput.class.php';
+
+    //
+    
 
     //conexao e query de insercao dos setores
     $conn = new Conexao();
@@ -15,6 +19,6 @@
     if($cadastrar->rowCount()){
         echo "<script> alert('DADO INSERIDO COM SUCESSO!'); location.href='../index.php' </script>";
     }else{
-        echo "<script> alert('Deu ruim ai grandeeeeee');</script>";
+        echo "<script> alert('Deu ruim ai grandeeeeee SET');</script>";
     }
 ?>

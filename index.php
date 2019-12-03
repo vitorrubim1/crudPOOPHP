@@ -10,7 +10,13 @@
 </head>
 
 <body>
-    <?php require_once 'class/conexao.class.php';?>
+    <?php 
+        require_once 'class/conexao.class.php';
+        require_once 'class/ValidaInput.class.php';
+
+       
+        
+    ?>
 
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -28,6 +34,9 @@
             <!--BOTÃO CADASTRAR FUNCIONÁRIO, AQUI ABRE O MODAL-->
             <input type="button" class="btn btn-dark btn-lg btnPersonalizado" data-toggle="modal" data-target="#modal" value="Cadastrar Funcionário">
         </form>
+        <!--BOTÃO SETOR-->
+            <hr>
+            <a type="button" class="btn btn-dark btn-lg btnPersonalizado"  href="php/atualizaSetor.php">Editar Setor </a>
 
 
         <!--MODAL-->
@@ -44,7 +53,7 @@
                         <!--FORMULÁRIO FUNCIONÁRIO-->
                         <form action="php/cadastroFuncionario.php" method="post">
 
-                            <input class="form-control" type="text" placeholder="DIGITE O NOME DO FUNCIONÁRIO:" name="nomeFuncionario" required autocomplete="off"> <br>
+                            <input class="form-control" type="text" placeholder="DIGITE O NOME DO FUNCIONÁRIO:" name="nomeFuncionario" autocomplete="off"> <br>
 
                             <select class="form-control" name="sexo">
                                 <option value="M">Masculino</option>
@@ -52,7 +61,7 @@
                             </select> <br>
 
                             <label>Informe o Setor</label>
-                            <select class="form-control" name="setor" required>
+                            <select class="form-control" name="setor" >
                                 <?php
                                 //chamando a conexao
                                 require_once 'class/conexao.class.php';
@@ -75,7 +84,7 @@
                                 <?php } ?>
                             </select> <br>
 
-                            <input class="form-control" type="number" name="cpf" placeholder="Digite o CPF:" required> <br>
+                            <input class="form-control" type="number" name="cpf" placeholder="Digite o CPF:" > <br>
 
                             <textarea class="form-control" name="observacoes" placeholder="ESCREVA UMA OBSERVAÇÃO SOBRE ELE.."></textarea>
 
@@ -126,10 +135,12 @@
                 $cpf = $listar['cpf'];
                 $observacoes = $listar['observacoes'];
                 $nomeSetor = $listar['nomeSetor']; 
-
+                
+                
             ?>
 
                 <tr>
+                    <input type="hidden" value="$listar['idFuncionario']" name="idFuncionario">
                     <th scope="row"> <?php echo "$idFuncionario"  ?> </th>
                     <td> <?php echo "$nomeFuncionario"  ?> </td>
                     <td> <?php echo "$sexo"  ?> </td>
@@ -139,7 +150,7 @@
                    
 
                     <td> 
-                        <a class="btn btn-dark btn-sm" name="btnAtualiza" id="btnAcao" href="php/atualiza.php?id=<?php echo $idFuncionario ?>" role="button">ATUALIZAR</a> <br> <br>
+                        <a class="btn btn-dark btn-sm" name="btnAtualiza" id="btnAcao" href="php/atualiza.php?id=<?php echo base64_encode($listar['idFuncionario']) ?>" role="button">ATUALIZAR</a> <br> <br>
                         <a class="btn btn-danger btn-sm" id="btnAcao" href="php/apagar.php?id=<?php echo $idFuncionario ?>" role="button">EXCLUIR</a> 
                     </td>
                 </tr>
